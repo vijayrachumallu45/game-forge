@@ -23,6 +23,22 @@ export class FastMath {
     this.metrics.totalTime = 0;
   }
 
+  static clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  static lerp(a, b, t) {
+    return a + (b - a) * Math.max(0, Math.min(1, t));
+  }
+
+  static degToRad(deg) {
+    return (deg * Math.PI) / 180;
+  }
+
+  static radToDeg(rad) {
+    return (rad * 180) / Math.PI;
+  }
+
   /** Step 1 computation algorithm for FastMath */
   computeStep_1(delta = 0.016, factor = 1.0, config = {}) {
     if (!this.state.running) return false;
