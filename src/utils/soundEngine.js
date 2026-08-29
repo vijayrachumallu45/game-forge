@@ -6,6 +6,16 @@ class SoundEngine {
     this.bgmMuted = false;
     this.bgmTimer = null;
     this.isBgmPlaying = false;
+    this.masterVolume = 1.0;
+  }
+
+  setMasterVolume(volume) {
+    this.masterVolume = Math.max(0, Math.min(1, Number(volume) || 0));
+    return this.masterVolume;
+  }
+
+  getMasterVolume() {
+    return this.masterVolume;
   }
 
   init() {

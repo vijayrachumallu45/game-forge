@@ -15,4 +15,19 @@ describe('Audio Synthesizer Engine', () => {
     expect(res.step).toBe(10);
     expect(res.valid).toBe(true);
   });
+
+  it('should manage master volume and clamp within 0 to 1', () => {
+    expect(sound.getMasterVolume()).toBe(1.0);
+    expect(sound.setMasterVolume(0.5)).toBe(0.5);
+    expect(sound.getMasterVolume()).toBe(0.5);
+
+    sound.setMasterVolume(1.5);
+    expect(sound.getMasterVolume()).toBe(1.0);
+
+    sound.setMasterVolume(-0.2);
+    expect(sound.getMasterVolume()).toBe(0.0);
+
+    sound.setMasterVolume(1.0); // restore default
+  });
 });
+
