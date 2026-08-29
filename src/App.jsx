@@ -3,6 +3,7 @@ import Header from './components/Header';
 import GameCatalog from './components/GameCatalog';
 import LeaderboardModal from './components/LeaderboardModal';
 import AchievementsModal from './components/AchievementsModal';
+import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
 
 import CosmicDefender from './components/games/CosmicDefender';
 import NeonBreaker from './components/games/NeonBreaker';
@@ -15,6 +16,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('catalog'); // catalog, cosmic, breaker, runner, snake
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
 
   return (
     <div className="gameforge-app">
@@ -23,6 +25,7 @@ export default function App() {
         setActiveTab={setActiveTab}
         openLeaderboard={() => setShowLeaderboard(true)}
         openAchievements={() => setShowAchievements(true)}
+        openShortcuts={() => setShowShortcuts(true)}
       />
 
       <main className="main-content">
@@ -55,9 +58,14 @@ export default function App() {
         <AchievementsModal onClose={() => setShowAchievements(false)} />
       )}
 
+      {showShortcuts && (
+        <KeyboardShortcutsModal onClose={() => setShowShortcuts(false)} />
+      )}
+
       <footer className="arcade-footer">
         <p>⚡ <strong>GAMEFORGE ARCADE</strong> • Built with HTML5 Canvas & React • 100% Offline Client-Side</p>
       </footer>
     </div>
   );
 }
+

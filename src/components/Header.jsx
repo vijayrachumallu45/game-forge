@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { sound } from '../utils/soundEngine';
 import { getPlayerName, setPlayerName } from '../utils/storage';
 
-export default function Header({ activeTab, setActiveTab, openLeaderboard, openAchievements }) {
+export default function Header({ activeTab, setActiveTab, openLeaderboard, openAchievements, openShortcuts }) {
   const [muted, setMuted] = useState(false);
   const [bgmOn, setBgmOn] = useState(false);
   const [name, setName] = useState(getPlayerName());
@@ -63,7 +63,19 @@ export default function Header({ activeTab, setActiveTab, openLeaderboard, openA
           >
             🎖️ Badges
           </button>
+          {openShortcuts && (
+            <button
+              className="nav-btn"
+              onClick={() => {
+                sound.playSound('bounce');
+                openShortcuts();
+              }}
+            >
+              ⌨️ Controls
+            </button>
+          )}
         </nav>
+
 
         <div className="header-controls">
           <div className="player-badge">
