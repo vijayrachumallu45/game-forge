@@ -117,3 +117,44 @@ export const clearAllData = () => {
   localStorage.removeItem(STORAGE_KEYS.STATS);
   localStorage.removeItem(STORAGE_KEYS.ACHIEVEMENTS);
 };
+
+export const resetHighScores = (gameId) => {
+  const allScores = getHighScores();
+  if (gameId && allScores[gameId]) {
+    delete allScores[gameId];
+    localStorage.setItem(STORAGE_KEYS.HIGH_SCORES, JSON.stringify(allScores));
+    return true;
+  }
+  return false;
+};
+
+export const exportGameData = () => {
+  const data = {
+    scores: getHighScores(),
+    achievements: getUnlockedAchievements(),
+    playerName: getPlayerName(),
+    exportedAt: new Date().toISOString()
+  };
+  return JSON.stringify(data, null, 2);
+};
+
+export const importGameData = (jsonString) => {
+  try {
+    const parsed = JSON.parse(jsonString);
+    if (!parsed || typeof parsed !== 'object') return false;
+
+    if (parsed.scores) {
+      localStorage.setItem(STORAGE_KEYS.HIGH_SCORES, JSON.stringify(parsed.scores));
+    }
+    if (parsed.achievements && Array.isArray(parsed.achievements)) {
+      localStorage.setItem(STORAGE_KEYS.ACHIEVEMENTS, JSON.stringify(parsed.achievements));
+    }
+    if (parsed.playerName) {
+      setPlayerName(parsed.playerName);
+    }
+    return true;
+  } catch {
+    return false;
+  }
+};
+
